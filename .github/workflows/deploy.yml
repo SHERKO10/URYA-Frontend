@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline Frontend
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  FTP-Deploy:
-    name: Déployer via FTP
+  FTP-Deploy-Frontend:
+    name: Déployer via FTP (Frontend)
     runs-on: ubuntu-latest
 
     env:
@@ -17,14 +17,24 @@ jobs:
       - name: Checkout du code source
         uses: actions/checkout@v4
 
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' 
+
+      - name: Installer les dépendances (npm install)
+        run: npm install
+
+      - name: Builder le projet (npm run build)
+        run: npm run build
+      # --- FIN DES AJOUTS ---
+
       - name: Déployer via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          local-dir: ./ 
-          server-dir: / 
-          port: ${{ secrets.PORT || 21 }}
-          protocol: ftp
-          dry-run: false
+          local-dir: ./dist/
+          server-dir: ./public_html/
