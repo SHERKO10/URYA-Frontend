@@ -35,6 +35,7 @@ const Navbar = () => {
     { name: 'Accueil', path: '/' },
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Projets', path: '/projects' },
+    { name: 'Neural Crypto', path: '/neural-crypto' },
   ];
 
   if (isAuthenticated && hasAdminSession) {

@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Shield, Brain, Lock, Smartphone, BarChart3, BookOpen } from 'lucide-react';
+import { Shield, Brain, Lock, Smartphone, BarChart3, BookOpen, ExternalLink, ArrowRight } from 'lucide-react';
 import Hero from '../components/Hero';
 import Navbar from '../components/Navbar';
 
@@ -97,20 +97,21 @@ const Landing = () => {
                 color: 'from-cyan-500 to-blue-600',
               },
               {
-                icon: <Smartphone className="w-12 h-12" />,
-                title: 'AFRICAPAY',
-                subtitle: 'Application de paiement Mobile Money en CFA',
-                description: 'Paiements par QR code basés sur blockchain (Stellar/Celo). Solution aux problèmes de frais élevés et manque d\'interopérabilité Tmoney/Flooz.',
-                features: ['QR Code', 'Blockchain Stellar', 'Sans frais élevés', 'Interopérable'],
+                icon: <Shield className="w-12 h-12" />,
+                title: 'LORA',
+                subtitle: 'Détective Numérique Anti-Escroqueries',
+                description: 'LORA parcourt internet à la recherche d\'escroqueries. Il analyse automatiquement les informations disponibles sur une personne ou structure — réseaux sociaux, sites web, forums — et calcule un score de risque pour savoir si c\'est dangereux.',
+                features: ['Score de risque', 'Analyse réseaux sociaux', 'Détection arnaques', 'Accessible à tous'],
                 color: 'from-emerald-500 to-teal-600',
               },
               {
                 icon: <Brain className="w-12 h-12" />,
-                title: 'Neurol Détection',
-                subtitle: 'Module IA de Détection d\'Intrusions',
-                description: 'Module ML (Random Forest + LSTM) pour la détection d\'anomalies. Réduction de 40% du temps de détection avec 100 000 logs.',
+                title: 'URYA Neural Cryptography',
+                subtitle: 'Module IA de Cryptographie Neuronale',
+                description: 'Module ML (Random Forest + LSTM) pour la détection d\'anomalies et la cryptographie neuronale. Réduction de 40% du temps de détection avec 100 000 logs.',
                 features: ['100 000 logs', 'Random Forest + LSTM', 'API REST', '-40% temps détection'],
                 color: 'from-violet-500 to-purple-600',
+                internalLink: '/neural-crypto',
               },
             ].map((project, index) => (
               <motion.div
@@ -119,14 +120,17 @@ const Landing = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
-                className="card-glass card-hover p-8 relative overflow-hidden group"
+                onClick={() => project.internalLink && navigate(project.internalLink)}
+                className={`card-glass card-hover p-8 relative overflow-hidden group ${
+                  project.internalLink ? 'cursor-pointer' : ''
+                }`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 <div className="text-primary-400 mb-6">{project.icon}</div>
                 <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
                 <p className="text-primary-400 text-sm mb-4">{project.subtitle}</p>
                 <p className="text-dark-400 mb-6">{project.description}</p>
-                <ul className="space-y-2">
+                <ul className="space-y-2 mb-6">
                   {project.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-2 text-dark-300 text-sm">
                       <Lock className="w-4 h-4 text-primary-500" />
@@ -134,6 +138,24 @@ const Landing = () => {
                     </li>
                   ))}
                 </ul>
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 text-sm font-medium transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Voir le projet
+                  </a>
+                )}
+                {project.internalLink && (
+                  <div className="inline-flex items-center gap-2 text-violet-400 text-sm font-medium">
+                    <ArrowRight className="w-4 h-4" />
+                    Accéder à la console
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>

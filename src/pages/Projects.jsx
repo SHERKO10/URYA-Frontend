@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Brain,
-  Smartphone,
   BarChart3,
   Target,
   Users,
@@ -15,7 +14,6 @@ import axios from 'axios';
 const categories = [
   { id: 'all', label: 'Tous', icon: null },
   { id: 'ai', label: 'IA', icon: <Brain className="w-4 h-4" /> },
-  { id: 'mobile', label: 'Mobile', icon: <Smartphone className="w-4 h-4" /> },
 ];
 
 const Projects = () => {
