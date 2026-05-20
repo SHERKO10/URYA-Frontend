@@ -4,8 +4,7 @@ import { Star, Send } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useFirebase } from '../context/FirebaseContext';
 import toast from 'react-hot-toast';
-import axios from 'axios';
-
+import { reviewsData } from '../data/reviews';
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
@@ -17,35 +16,11 @@ const Reviews = () => {
     fetchReviews();
   }, []);
 
-  const fetchReviews = async () => {
-    try {
-      const response = await axios.get('/api/reviews');
-      setReviews(response.data);
-    } catch (error) {
-      console.error('Error fetching reviews:', error);
-      // Demo data if API fails
-      setReviews([
-        {
-          id: '1',
-          userName: 'Alice Martin',
-          userAvatar: null,
-          rating: 5,
-          comment: 'Projet incroyable ! L\'interface est magnifique et les fonctionnalités sont top.',
-          createdAt: new Date().toISOString(),
-        },
-        {
-          id: '2',
-          userName: 'Thomas Dubois',
-          userAvatar: null,
-          rating: 4,
-          comment: 'Très beau travail, hâte de voir les prochaines évolutions !',
-          createdAt: new Date().toISOString(),
-        },
-      ]);
-    }
+  const fetchReviews = () => {
+    setReviews(reviewsData);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!isAuthenticated) {
@@ -60,24 +35,22 @@ const Reviews = () => {
 
     setIsSubmitting(true);
 
-    try {
-      await axios.post('/api/reviews', {
+    setTimeout(() => {
+      const newReviewItem = {
+        id: Date.now().toString(),
         userId: user.uid,
         userName: user.displayName || user.email?.split('@')[0],
         userAvatar: user.photoURL,
         rating: newReview.rating,
         comment: newReview.comment,
-      });
+        createdAt: new Date().toISOString()
+      };
 
+      setReviews([newReviewItem, ...reviews]);
       toast.success('Avis publié avec succès !');
       setNewReview({ rating: 5, comment: '' });
-      fetchReviews();
-    } catch (error) {
-      console.error('Error submitting review:', error);
-      toast.error("Erreur lors de l'envoi de l'avis");
-    } finally {
       setIsSubmitting(false);
-    }
+    }, 500);
   };
 
   const StarRating = ({ rating, interactive = false, onRate }) => {

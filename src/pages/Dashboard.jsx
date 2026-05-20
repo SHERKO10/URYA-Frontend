@@ -16,35 +16,30 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Reviews from '../components/Reviews';
-import axios from 'axios';
-
+import { projectsData } from '../data/projects';
+import { reviewsData } from '../data/reviews';
 const Dashboard = () => {
   const [projects, setProjects] = useState([]);
   const [featuredProject, setFeaturedProject] = useState(null);
   const [stats, setStats] = useState({ projects: 0, average: 0, reviews: 0 });
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const [projectsRes, reviewStatsRes] = await Promise.all([
-          axios.get('/api/projects'),
-          axios.get('/api/reviews/stats/average'),
-        ]);
+    const loadData = () => {
+      setProjects(projectsData);
+      setFeaturedProject(
+        projectsData.find((p) => p.isFeatured) || projectsData[0] || null
+      );
 
-        const apiProjects = projectsRes.data || [];
-        setProjects(apiProjects);
-        setFeaturedProject(
-          apiProjects.find((p) => p.isFeatured) || apiProjects[0] || null
-        );
+      const totalReviews = reviewsData.length;
+      const averageRating = totalReviews
+        ? (reviewsData.reduce((acc, curr) => acc + curr.rating, 0) / totalReviews).toFixed(1)
+        : 0;
 
-        setStats({
-          projects: apiProjects.length,
-          average: Number(reviewStatsRes.data?.averageRating || 0).toFixed(1),
-          reviews: reviewStatsRes.data?.totalReviews || 0,
-        });
-      } catch (error) {
-        console.error('Error loading dashboard data:', error);
-      }
+      setStats({
+        projects: projectsData.length,
+        average: averageRating,
+        reviews: totalReviews,
+      });
     };
 
     loadData();
@@ -81,7 +76,7 @@ const Dashboard = () => {
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary-500/10 border border-primary-500/20 rounded-full mb-6"
             >
               <Rocket className="w-4 h-4 text-primary-400" />
-              <span className="text-sm text-primary-400">Projet de Stage CUBE 2026</span>
+              <span className="text-sm text-primary-400">URYA 2026</span>
             </motion.div>
 
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
@@ -401,10 +396,7 @@ const Dashboard = () => {
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-dark-800">
         <div className="max-w-7xl mx-auto text-center text-dark-500">
-          <p>© 2026 URYA × CUBE. Tous droits réservés.</p>
-          <p className="text-sm mt-2">
-            Projet de stage - Programme CUBE | Partenaire: D-CLIC - OIF
-          </p>
+          <p>© 2026 URYA. Tous droits réservés.</p>
         </div>
       </footer>
     </div>

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, User, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useFirebase } from '../context/FirebaseContext';
-import uryaLogo from '../assets/urya.jpeg';
+import uryaLogo from '../assets/urya.jpg';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,8 +12,6 @@ const Navbar = () => {
   const { isAuthenticated } = useAuth();
   const { user, logout } = useFirebase();
   const location = useLocation();
-  const [hasAdminSession, setHasAdminSession] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -22,25 +20,14 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const syncAdminSession = () => {
-      setHasAdminSession(Boolean(localStorage.getItem('urya_admin_token')));
-    };
-    syncAdminSession();
-    window.addEventListener('storage', syncAdminSession);
-    return () => window.removeEventListener('storage', syncAdminSession);
-  }, []);
+
 
   const navLinks = [
     { name: 'Accueil', path: '/' },
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Projets', path: '/projects' },
-    { name: 'Neural Crypto', path: '/neural-crypto' },
   ];
 
-  if (isAuthenticated && hasAdminSession) {
-    navLinks.push({ name: 'Admin', path: '/admin' });
-  }
 
   const handleLogout = async () => {
     await logout();

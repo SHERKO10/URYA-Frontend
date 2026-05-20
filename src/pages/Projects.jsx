@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Brain,
+  Smartphone,
   BarChart3,
   Target,
   Users,
@@ -9,11 +10,11 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
-import axios from 'axios';
-
+import { projectsData } from '../data/projects';
 const categories = [
   { id: 'all', label: 'Tous', icon: null },
   { id: 'ai', label: 'IA', icon: <Brain className="w-4 h-4" /> },
+  { id: 'mobile', label: 'Mobile', icon: <Smartphone className="w-4 h-4" /> },
 ];
 
 const Projects = () => {
@@ -22,15 +23,9 @@ const Projects = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const { data } = await axios.get('/api/projects');
-        setProjects(data);
-      } catch (error) {
-        console.error('Error fetching projects:', error);
-      } finally {
-        setLoading(false);
-      }
+    const fetchProjects = () => {
+      setProjects(projectsData);
+      setLoading(false);
     };
 
     fetchProjects();
@@ -232,63 +227,10 @@ const Projects = () => {
         </div>
       </section>
 
-      {/* Info Section */}
-      <section className="py-16 px-4 bg-dark-900/50">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="gradient-text">Période du Stage</span>
-            </h2>
-            <p className="text-dark-400">01 Mars 2026 - 30 Mai 2026 (3 mois)</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: <Target className="w-8 h-8" />,
-                title: 'Objectif Principal',
-                description: 'Produire des livrables concrets et commercialisables : notebooks cryptographiques, modules IA, dashboards SaaS, et prestations d\'audit.',
-              },
-              {
-                icon: <Users className="w-8 h-8" />,
-                title: 'Cible',
-                description: 'Entreprises ayant des données confidentielles, banques, startups, et utilisateurs de Mobile Money au Togo.',
-              },
-              {
-                icon: <BarChart3 className="w-8 h-8" />,
-                title: 'Impact',
-                description: 'Réduction des attaques ransomware, protection des transactions, et sensibilisation à la cybersécurité.',
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="card-glass p-6"
-              >
-                <div className="text-primary-400 mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-dark-400 text-sm">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-dark-800">
         <div className="max-w-7xl mx-auto text-center text-dark-500">
-          <p>© 2026 URYA × CUBE. Tous droits réservés.</p>
-          <p className="text-sm mt-2">
-            Projet de stage - Programme CUBE | Partenaire: D-CLIC - OIF
-          </p>
+          <p>© 2026 URYA. Tous droits réservés.</p>
         </div>
       </footer>
     </div>

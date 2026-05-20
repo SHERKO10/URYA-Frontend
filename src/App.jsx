@@ -17,8 +17,7 @@ import Landing from './pages/Landing';
 import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
-import Admin from './pages/Admin';
-import NeuralCrypto from './pages/NeuralCrypto';
+
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -37,7 +36,7 @@ const ProtectedRoute = ({ children }) => {
 
 const GlobalChatBot = () => {
   const location = useLocation();
-  const hideOnRoutes = ['/auth', '/admin'];
+  const hideOnRoutes = ['/auth'];
 
   if (hideOnRoutes.includes(location.pathname)) {
     return null;
@@ -66,15 +65,7 @@ function App() {
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/neural-crypto" element={<NeuralCrypto />} />
-            <Route
-              path="/admin"
-              element={(
-                <ProtectedRoute>
-                  <Admin />
-                </ProtectedRoute>
-              )}
-            />
+
           </Routes>
           <GlobalChatBot />
         </Router>

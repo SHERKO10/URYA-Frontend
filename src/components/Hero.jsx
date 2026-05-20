@@ -1,9 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import uryaLogo from '../assets/urya.jpeg';
-import cubeLogo from '../assets/cubelogo.png';
-import kpiLogo from '../assets/kpi.jpeg';
+import uryaLogo from '../assets/urya.jpg';
 
 const Hero = () => {
   return (
@@ -63,51 +61,7 @@ const Hero = () => {
             />
           </motion.div>
 
-          {/* X separator */}
-          <motion.span
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3, type: 'spring' }}
-            className="text-3xl md:text-4xl text-dark-600 font-light"
-          >
-            ×
-          </motion.span>
 
-          {/* CUBE Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="relative"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl blur-xl opacity-50" />
-            <img
-              src={cubeLogo}
-              alt="CUBE"
-              className="relative w-24 h-24 md:w-32 md:h-32 object-contain bg-dark-900/50 rounded-2xl p-4 shadow-2xl"
-            />
-          </motion.div>
-
-          {/* X separator */}
-          <motion.span
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.5, type: 'spring' }}
-            className="text-3xl md:text-4xl text-dark-600 font-light"
-          >
-            ×
-          </motion.span>
-
-          {/* KPI Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="relative"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl blur-xl opacity-50" />
-            <img
-              src={kpiLogo}
-              alt="KPI Investe"
-              className="relative w-24 h-24 md:w-32 md:h-32 object-cover rounded-2xl shadow-2xl"
-            />
-          </motion.div>
         </motion.div>
 
         {/* Title */}
