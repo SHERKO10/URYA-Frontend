@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Shield, Brain, Lock, Smartphone, BarChart3, BookOpen } from 'lucide-react';
+import { Shield, Brain, Lock, Smartphone, BarChart3, BookOpen, ArrowRight, ExternalLink } from 'lucide-react';
 import Hero from '../components/Hero';
 import Navbar from '../components/Navbar';
 
@@ -111,6 +111,7 @@ const Landing = () => {
                 description: 'Module ML (Random Forest + LSTM) pour la détection d\'anomalies. Réduction de 40% du temps de détection avec 100 000 logs.',
                 features: ['100 000 logs', 'Random Forest + LSTM', 'API REST', '-40% temps détection'],
                 color: 'from-violet-500 to-purple-600',
+                internalLink: '/neural-crypto',
               },
             ].map((project, index) => (
               <motion.div
@@ -119,7 +120,10 @@ const Landing = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
-                className="card-glass card-hover p-8 relative overflow-hidden group"
+                onClick={() => project.internalLink && navigate(project.internalLink)}
+                className={`card-glass card-hover p-8 relative overflow-hidden group ${
+                  project.internalLink ? 'cursor-pointer' : ''
+                }`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 <div className="text-primary-400 mb-6">{project.icon}</div>
@@ -134,6 +138,24 @@ const Landing = () => {
                     </li>
                   ))}
                 </ul>
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 text-sm font-medium transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Voir le projet
+                  </a>
+                )}
+                {project.internalLink && (
+                  <div className="inline-flex items-center gap-2 mt-6 text-violet-400 text-sm font-medium">
+                    <ArrowRight className="w-4 h-4" />
+                    Accéder à la console
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
