@@ -59,8 +59,20 @@ const ResultBox = ({ label, content, variant = 'default' }) => {
     <div className="mt-4">
       <p className="text-dark-400 text-xs mb-2 font-medium">{label}</p>
       <div className="rounded-xl overflow-hidden border border-dark-700">
-        <div className={`px-4 py-2 text-xs font-semibold border-b ${headerColor}`}>
-          {variant === 'success' ? '✓ Données sécurisées' : variant === 'danger' ? '⚠ Flux chiffré' : 'Résultat'}
+        <div className={`px-4 py-2 text-xs font-semibold border-b flex items-center gap-1.5 ${headerColor}`}>
+          {variant === 'success' ? (
+            <>
+              <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span>Données sécurisées</span>
+            </>
+          ) : variant === 'danger' ? (
+            <>
+              <AlertTriangle className="w-3.5 h-3.5 text-red-400 shrink-0" />
+              <span>Flux chiffré</span>
+            </>
+          ) : (
+            <span>Résultat</span>
+          )}
         </div>
         <div className="p-4 bg-dark-900/60 font-mono text-xs text-dark-300 break-all max-h-40 overflow-y-auto">
           {content || <span className="text-dark-600 italic">En attente...</span>}

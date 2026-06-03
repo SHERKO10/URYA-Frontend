@@ -5,9 +5,9 @@ import uryaLogo from '../assets/urya.jpg';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden mesh-bg">
       {/* Animated background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950">
+      <div className="absolute inset-0">
         {/* Gradient orbs */}
         <motion.div
           animate={{
@@ -16,7 +16,7 @@ const Hero = () => {
             scale: [1, 1.2, 1],
           }}
           transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-primary-600/20 rounded-full blur-[100px]"
         />
         <motion.div
           animate={{
@@ -25,22 +25,24 @@ const Hero = () => {
             scale: [1, 1.3, 1],
           }}
           transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-accent-600/20 rounded-full blur-[100px]"
         />
 
         {/* Grid pattern */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage: `linear-gradient(#fff 1px, transparent 1px),
-                              linear-gradient(90deg, #fff 1px, transparent 1px)`,
-            backgroundSize: '50px 50px',
+            backgroundImage: `linear-gradient(hsla(0,0%,100%,0.8) 1px, transparent 1px),
+                              linear-gradient(90deg, hsla(0,0%,100%,0.8) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px',
+            maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)'
           }}
         />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-12">
         {/* Logo section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -103,19 +105,19 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link to="/auth" className="btn-glow group">
+          <Link to="/console" className="btn-glow group">
             <span className="flex items-center gap-2">
-              Get Started
+              Tester la Console
               <Sparkles className="w-5 h-5" />
             </span>
           </Link>
 
           <Link
-            to="/dashboard"
+            to="/projects"
             className="btn-secondary group"
           >
             <span className="flex items-center gap-2">
-              Explorer
+              Découvrir nos Solutions
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </span>
           </Link>

@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Send } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { useFirebase } from '../context/FirebaseContext';
 import toast from 'react-hot-toast';
 import { reviewsData } from '../data/reviews';
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
+  const [name, setName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { isAuthenticated } = useAuth();
-  const { user } = useFirebase();
 
   useEffect(() => {
     fetchReviews();
@@ -23,8 +20,8 @@ const Reviews = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!isAuthenticated) {
-      toast.error('Vous devez être connecté pour laisser un avis');
+    if (!name.trim()) {
+      toast.error('Veuillez entrer votre nom');
       return;
     }
 
@@ -38,9 +35,9 @@ const Reviews = () => {
     setTimeout(() => {
       const newReviewItem = {
         id: Date.now().toString(),
-        userId: user.uid,
-        userName: user.displayName || user.email?.split('@')[0],
-        userAvatar: user.photoURL,
+        userId: 'local-user',
+        userName: name.trim(),
+        userAvatar: null,
         rating: newReview.rating,
         comment: newReview.comment,
         createdAt: new Date().toISOString()
@@ -48,6 +45,7 @@ const Reviews = () => {
 
       setReviews([newReviewItem, ...reviews]);
       toast.success('Avis publié avec succès !');
+      setName('');
       setNewReview({ rating: 5, comment: '' });
       setIsSubmitting(false);
     }, 500);
@@ -101,13 +99,28 @@ const Reviews = () => {
         >
           <h3 className="text-xl font-semibold mb-4">Laisser un avis</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm text-dark-400 mb-2">Votre note</label>
-              <StarRating
-                rating={newReview.rating}
-                interactive
-                onRate={(rating) => setNewReview({ ...newReview, rating })}
-              />
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm text-dark-400 mb-2">Votre nom</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Entrez votre nom..."
+                  className="input-field"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-dark-400 mb-2">Votre note</label>
+                <div className="h-[46px] flex items-center">
+                  <StarRating
+                    rating={newReview.rating}
+                    interactive
+                    onRate={(rating) => setNewReview({ ...newReview, rating })}
+                  />
+                </div>
+              </div>
             </div>
             <div>
               <label className="block text-sm text-dark-400 mb-2">Votre commentaire</label>
@@ -117,17 +130,12 @@ const Reviews = () => {
                 placeholder="Partagez votre expérience..."
                 rows={4}
                 className="input-field resize-none"
-                disabled={!isAuthenticated}
+                required
               />
-              {!isAuthenticated && (
-                <p className="text-xs text-dark-500 mt-1">
-                  Connectez-vous pour laisser un avis
-                </p>
-              )}
             </div>
             <button
               type="submit"
-              disabled={isSubmitting || !isAuthenticated}
+              disabled={isSubmitting}
               className="btn-primary flex items-center gap-2"
             >
               <Send className="w-4 h-4" />

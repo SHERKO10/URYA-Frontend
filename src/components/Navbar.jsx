@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, User, LogOut } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { useFirebase } from '../context/FirebaseContext';
+import { Menu, X } from 'lucide-react';
 import uryaLogo from '../assets/urya.jpg';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
-  const { user, logout } = useFirebase();
   const location = useLocation();
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -20,18 +17,17 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-
-
   const navLinks = [
     { name: 'Accueil', path: '/' },
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Projets', path: '/projects' },
+    { name: 'Solutions', path: '/projects' },
+    { name: 'Console Tech', path: '/console' },
   ];
 
-
-  const handleLogout = async () => {
-    await logout();
-  };
+  const whatsappNumberRaw = import.meta.env.VITE_WHATSAPP_NUMBER || '22890000000';
+  const whatsappNumber = String(whatsappNumberRaw).replace(/\D/g, '');
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    "Bonjour URYA, je souhaite planifier une démonstration de vos solutions de cybersécurité."
+  )}`;
 
   return (
     <motion.nav
@@ -78,38 +74,16 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Auth Buttons */}
+          {/* Action Button */}
           <div className="hidden md:flex items-center gap-3">
-            {isAuthenticated && user ? (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-dark-800 rounded-lg">
-                  {user.photoURL ? (
-                    <img
-                      src={user.photoURL}
-                      alt={user.displayName || 'User'}
-                      className="w-6 h-6 rounded-full"
-                    />
-                  ) : (
-                    <User className="w-5 h-5 text-dark-400" />
-                  )}
-                  <span className="text-sm text-dark-300">
-                    {user.displayName || user.email?.split('@')[0]}
-                  </span>
-                </div>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handleLogout}
-                  className="p-2 bg-dark-800 hover:bg-red-500/20 text-dark-400 hover:text-red-400 rounded-lg transition-colors"
-                >
-                  <LogOut className="w-5 h-5" />
-                </motion.button>
-              </div>
-            ) : (
-              <Link to="/auth" className="btn-primary">
-                Connexion
-              </Link>
-            )}
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary px-6 py-2.5 text-sm font-medium rounded-xl transition-all shadow-lg hover:shadow-primary-500/20"
+            >
+              Demander une Démo
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -150,22 +124,15 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
-              {isAuthenticated ? (
-                <button
-                  onClick={handleLogout}
-                  className="w-full px-4 py-3 text-left text-red-400 hover:bg-red-500/20 rounded-lg"
-                >
-                  Déconnexion
-                </button>
-              ) : (
-                <Link
-                  to="/auth"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block px-4 py-3 btn-primary text-center"
-                >
-                  Connexion
-                </Link>
-              )}
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block px-4 py-3 btn-primary text-center font-medium rounded-lg"
+              >
+                Demander une Démo
+              </a>
             </div>
           </motion.div>
         )}
