@@ -1,8 +1,190 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Shield, Brain, Lock, Smartphone, BarChart3, BookOpen, ArrowRight, ExternalLink, TrendingUp, PiggyBank, AlertTriangle } from 'lucide-react';
 import Hero from '../components/Hero';
 import Navbar from '../components/Navbar';
+
+const PhishingSimulator = () => {
+  const [step, setStep] = useState('idle'); // 'idle' | 'sms' | 'scanning' | 'blocked'
+  const [logs, setLogs] = useState([]);
+
+  const runSimulation = () => {
+    setStep('sms');
+    setLogs([]);
+    
+    // Step 2: Start Scan
+    setTimeout(() => {
+      setStep('scanning');
+      addLog('Démarrage de la surveillance IA locale...');
+      
+      setTimeout(() => {
+        addLog('Analyse sémantique du texte : SMS suspect détecté.');
+      }, 800);
+
+      setTimeout(() => {
+        addLog('Heuristique URL : Nom de domaine non officiel.');
+      }, 1600);
+
+      setTimeout(() => {
+        addLog('Calcul de confiance : 98.4% Phishing.');
+      }, 2400);
+
+      // Step 3: Block
+      setTimeout(() => {
+        setStep('blocked');
+      }, 3200);
+
+    }, 2000);
+  };
+
+  const addLog = (msg) => {
+    setLogs((prev) => [...prev, `> ${msg}`]);
+  };
+
+  const reset = () => {
+    setStep('idle');
+    setLogs([]);
+  };
+
+  return (
+    <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+      {/* Left Text */}
+      <div className="space-y-6 text-left">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-500/10 border border-primary-500/20 rounded-full text-primary-400 text-xs font-semibold">
+          🛡️ SÉCURITÉ MOBILE ACTIVE
+        </div>
+        <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+          Comment <span className="gradient-text">Scamurai</span> vous protège en temps réel.
+        </h3>
+        <p className="text-dark-400 leading-relaxed text-sm md:text-base">
+          Scamurai intègre un modèle d'intelligence artificielle locale qui tourne directement sur votre smartphone. 
+          Il intercepte les messages malveillants avant même qu'ils n'atteignent votre boîte de réception et neutralise les liens de phishing.
+        </p>
+        
+        <div className="pt-4">
+          {step === 'idle' ? (
+            <button
+              onClick={runSimulation}
+              className="btn-glow flex items-center gap-2"
+            >
+              Lancer la simulation
+              <ArrowRight className="w-5 h-5 animate-pulse" />
+            </button>
+          ) : (
+            <button
+              onClick={reset}
+              className="btn-secondary"
+            >
+              Réinitialiser la simulation
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Right Phone Mockup */}
+      <div className="flex justify-center">
+        <div className="relative w-[280px] sm:w-[300px] h-[560px] sm:h-[600px] bg-dark-950 border-4 border-dark-800 rounded-[40px] shadow-2xl shadow-primary-500/10 overflow-hidden flex flex-col">
+          {/* Speaker / Camera Notch */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-dark-800 rounded-b-2xl z-20 flex justify-center items-center">
+            <div className="w-12 h-1 bg-dark-950 rounded-full" />
+          </div>
+
+          {/* Status Bar */}
+          <div className="h-10 pt-2 px-6 flex justify-between items-center text-[10px] text-dark-500 font-semibold z-10">
+            <span>14:02</span>
+            <div className="flex items-center gap-1">
+              <span>5G</span>
+              <div className="w-4 h-2 border border-dark-500 rounded-[2px]" />
+            </div>
+          </div>
+
+          {/* Inner Screen Content */}
+          <div className="flex-1 p-4 flex flex-col justify-between relative bg-[#040812]">
+            {/* Background Mesh (Inside Phone) */}
+            <div className="absolute inset-0 bg-gradient-to-b from-primary-950/10 via-transparent to-dark-950 pointer-events-none" />
+
+            {/* Step: Idle */}
+            {step === 'idle' && (
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-4">
+                <div className="w-16 h-16 bg-dark-900 border border-dark-800 rounded-2xl flex items-center justify-center mb-4">
+                  <Smartphone className="w-8 h-8 text-dark-500" />
+                </div>
+                <p className="text-dark-400 text-xs">Prêt pour la simulation</p>
+                <p className="text-dark-500 text-[10px] mt-1">Appuyez sur "Lancer la simulation" à gauche.</p>
+              </div>
+            )}
+
+            {/* Step: SMS Received */}
+            {(step === 'sms' || step === 'scanning' || step === 'blocked') && (
+              <div className="flex-1 flex flex-col gap-4">
+                {/* Mock SMS Card */}
+                <motion.div
+                  initial={{ y: -50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  className={`p-4 rounded-2xl border transition-all duration-300 ${
+                    step === 'blocked'
+                      ? 'bg-red-500/10 border-red-500/30'
+                      : 'bg-dark-900 border-dark-800'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 bg-dark-800 rounded-full flex items-center justify-center text-[10px] font-bold text-dark-300">
+                      S
+                    </div>
+                    <span className="text-[11px] font-bold text-dark-300">SMS Suspect (Inconnu)</span>
+                  </div>
+                  <p className="text-[10px] text-dark-400 leading-normal">
+                    INFO T-MONEY : Votre compte a été temporairement restreint. Mettez à jour vos informations sur :
+                    <span className="text-primary-400 block mt-1 underline">http://t-money-securite-login.com</span>
+                  </p>
+                </motion.div>
+
+                {/* Step: Scanning Animation */}
+                {step === 'scanning' && (
+                  <div className="flex-1 flex flex-col justify-end gap-3 pb-4">
+                    <div className="flex items-center justify-center gap-2 py-2">
+                      <div className="w-2 h-2 bg-primary-500 rounded-full animate-ping" />
+                      <span className="text-[10px] text-primary-400 font-mono">Scan IA de Scamurai...</span>
+                    </div>
+                    {/* Console Logs */}
+                    <div className="bg-dark-950 border border-dark-800 rounded-xl p-3 font-mono text-[8px] text-dark-400 space-y-1 max-h-[160px] overflow-y-auto">
+                      {logs.map((log, index) => (
+                        <div key={index} className="leading-tight">{log}</div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Step: Blocked Notification */}
+                {step === 'blocked' && (
+                  <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="flex-1 flex flex-col items-center justify-center text-center p-4 gap-4"
+                  >
+                    <div className="w-14 h-14 bg-red-500/20 border border-red-500/30 rounded-full flex items-center justify-center animate-bounce">
+                      <Shield className="w-7 h-7 text-red-500" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-red-400 mb-1">MENACE PHISHING BLOQUÉE</h4>
+                      <p className="text-[10px] text-dark-400 leading-relaxed px-2">
+                        Le moteur IA local a identifié ce message comme une tentative d'hameçonnage ciblé. Le lien a été neutralisé.
+                      </p>
+                    </div>
+                    <div className="px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-lg text-[9px] text-red-400 font-mono">
+                      Confiance : 98.4% (Modèle local v1.0)
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -129,35 +311,7 @@ const Landing = () => {
 
       {/* Demo Section */}
       <section className="py-24 px-4 bg-dark-900/50">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="gradient-text">Scamurai en Action</span>
-            </h2>
-            <p className="text-dark-400 max-w-2xl mx-auto">
-              Découvrez comment Scamurai bloque instantanément une tentative de phishing ciblé.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-accent-500/20 group cursor-pointer"
-          >
-            <div className="absolute inset-0 bg-dark-950/60 flex items-center justify-center group-hover:bg-dark-950/40 transition-colors">
-              <div className="w-20 h-20 bg-accent-500/80 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-white border-b-[12px] border-b-transparent ml-2" />
-              </div>
-            </div>
-            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200" alt="Scamurai Demo" className="w-full h-full object-cover" />
-          </motion.div>
-        </div>
+        <PhishingSimulator />
       </section>
 
       {/* Pricing Section */}
