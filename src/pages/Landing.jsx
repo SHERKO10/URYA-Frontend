@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
 import {
   Shield, Brain, Lock, Smartphone, BarChart3,
@@ -178,9 +179,11 @@ const PhishingSimulator = () => {
 /* ═══════════════════════════════════════════ */
 const ContactForm = () => {
   const [formData, setFormData] = useState({
-    name: '', email: '', company: '', role: '', message: '',
+    user_name: '', user_email: '', company: '', role: '', message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const formRef = useRef();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -188,8 +191,23 @@ const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setIsSubmitting(true);
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
+
+    emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+      .then((result) => {
+        setSubmitted(true);
+        setIsSubmitting(false);
+        setFormData({ user_name: '', user_email: '', company: '', role: '', message: '' });
+        setTimeout(() => setSubmitted(false), 5000);
+      }, (error) => {
+        console.error(error);
+        setIsSubmitting(false);
+        alert("Une erreur est survenue lors de l'envoi du message. Veuillez réessayer.");
+      });
   };
 
   return (
@@ -241,14 +259,14 @@ const ContactForm = () => {
             <p className="text-slate-500 text-sm">Notre équipe vous recontactera sous 24h.</p>
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="card-glass p-6 md:p-8 space-y-5">
+          <form ref={formRef} onSubmit={handleSubmit} className="card-glass p-6 md:p-8 space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Nom complet</label>
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="user_name"
+                  value={formData.user_name}
                   onChange={handleChange}
                   required
                   placeholder="Jean Dupont"
@@ -259,8 +277,8 @@ const ContactForm = () => {
                 <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Email professionnel</label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
+                  name="user_email"
+                  value={formData.user_email}
                   onChange={handleChange}
                   required
                   placeholder="j.dupont@entreprise.com"
@@ -305,9 +323,9 @@ const ContactForm = () => {
                 className="input-field resize-none"
               />
             </div>
-            <button type="submit" className="w-full btn-glow flex items-center justify-center gap-2 text-sm">
-              Envoyer la demande
-              <Send className="w-4 h-4" />
+            <button type="submit" disabled={isSubmitting} className="w-full btn-glow flex items-center justify-center gap-2 text-sm disabled:opacity-50">
+              {isSubmitting ? 'Envoi en cours...' : 'Envoyer la demande'}
+              {!isSubmitting && <Send className="w-4 h-4" />}
             </button>
             <p className="text-[11px] text-slate-400 text-center">
               Vos informations restent confidentielles et ne sont jamais partagées.
