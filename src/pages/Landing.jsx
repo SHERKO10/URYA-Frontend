@@ -1,6 +1,7 @@
-import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
+import toast from 'react-hot-toast';
 import {
   Shield, Brain, Lock, Smartphone, BarChart3,
   ArrowRight, TrendingUp, AlertTriangle,
@@ -180,7 +181,8 @@ const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '', email: '', company: '', role: '', message: '',
   });
-  const [status, setStatus] = useState('idle'); // idle, loading, success, error
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -188,43 +190,34 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus('loading');
-
-    // Clé Web3Forms - le client peut l'obtenir gratuitement en 2s sur web3forms.com
-    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY || 'VOTRE_CLE_WEB3FORMS_ICI';
-
-    if (accessKey === 'VOTRE_CLE_WEB3FORMS_ICI') {
-      console.warn("N'oubliez pas d'ajouter votre clé Web3Forms !");
-      // Fallback temporaire pour la démo si la clé n'est pas encore mise
-      setTimeout(() => setStatus('success'), 1500);
-      setTimeout(() => setStatus('idle'), 5000);
-      return;
-    }
+    setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+      // Configuration EmailJS à remplacer par tes identifiants
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID',
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          company: formData.company,
+          role: formData.role,
+          message: formData.message,
+          to_email: 'teamurya@gmail.com',
         },
-        body: JSON.stringify({
-          access_key: accessKey,
-          subject: "URYA - Nouvelle demande de démo depuis le site web",
-          ...formData
-        }),
-      });
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
+      );
 
-      const result = await response.json();
-      if (result.success) {
-        setStatus('success');
-        setFormData({ name: '', email: '', company: '', role: '', message: '' });
-        setTimeout(() => setStatus('idle'), 6000);
-      } else {
-        setStatus('error');
-      }
+      setSubmitted(true);
+      setFormData({ name: '', email: '', company: '', role: '', message: '' });
+      toast.success('Message envoyé avec succès !');
+      
+      setTimeout(() => setSubmitted(false), 5000);
     } catch (error) {
-      setStatus('error');
+      console.error('Erreur EmailJS:', error);
+      toast.error('Erreur lors de l\'envoi du message. Veuillez réessayer plus tard.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -264,7 +257,7 @@ const ContactForm = () => {
 
       {/* Right — Form */}
       <div>
-        {status === 'success' ? (
+        {submitted ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -289,7 +282,7 @@ const ContactForm = () => {
                   required
                   placeholder="Jean Dupont"
                   className="input-field"
-                  disabled={status === 'loading'}
+                  disabled={isSubmitting}
                 />
               </div>
               <div>
@@ -302,7 +295,7 @@ const ContactForm = () => {
                   required
                   placeholder="j.dupont@entreprise.com"
                   className="input-field"
-                  disabled={status === 'loading'}
+                  disabled={isSubmitting}
                 />
               </div>
             </div>
@@ -317,7 +310,7 @@ const ContactForm = () => {
                   required
                   placeholder="Nom de l'entreprise"
                   className="input-field"
-                  disabled={status === 'loading'}
+                  disabled={isSubmitting}
                 />
               </div>
               <div>
@@ -329,7 +322,7 @@ const ContactForm = () => {
                   onChange={handleChange}
                   placeholder="DSI, RSSI, CTO…"
                   className="input-field"
-                  disabled={status === 'loading'}
+                  disabled={isSubmitting}
                 />
               </div>
             </div>
@@ -343,23 +336,17 @@ const ContactForm = () => {
                 rows={4}
                 placeholder="Décrivez brièvement votre besoin en cybersécurité…"
                 className="input-field resize-none"
-                disabled={status === 'loading'}
+                disabled={isSubmitting}
               />
             </div>
-            
-            {status === 'error' && (
-              <p className="text-red-500 text-xs font-semibold text-center">
-                Une erreur s'est produite lors de l'envoi. Veuillez réessayer.
-              </p>
-            )}
 
             <button 
               type="submit" 
-              disabled={status === 'loading'}
+              disabled={isSubmitting}
               className="w-full btn-glow flex items-center justify-center gap-2 text-sm disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {status === 'loading' ? 'Envoi en cours...' : 'Envoyer la demande'}
-              {status !== 'loading' && <Send className="w-4 h-4" />}
+              {isSubmitting ? 'Envoi en cours...' : 'Envoyer la demande'}
+              {!isSubmitting && <Send className="w-4 h-4" />}
             </button>
             <p className="text-[11px] text-slate-400 text-center">
               Vos informations restent confidentielles et ne sont jamais partagées.
