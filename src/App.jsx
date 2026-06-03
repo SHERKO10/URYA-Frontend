@@ -1,16 +1,8 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import ChatBot from './components/ChatBot';
-
-// Pages
 import Landing from './pages/Landing';
-import Dashboard from './pages/Dashboard';
-import Projects from './pages/Projects';
-import NeuralCrypto from './pages/NeuralCrypto';
+import Legal from './pages/Legal';
+import Privacy from './pages/Privacy';
 
 function App() {
   return (
@@ -19,19 +11,20 @@ function App() {
         position="top-center"
         toastOptions={{
           style: {
-            background: '#1e293b',
-            color: '#fff',
-            border: '1px solid #334155',
+            background: '#ffffff',
+            color: '#0f172a',
+            border: '1px solid #e2e8f0',
+            boxShadow: '0 4px 12px -2px rgb(0 0 0 / 0.06)',
+            borderRadius: '12px',
+            fontSize: '14px',
           },
         }}
       />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/console" element={<NeuralCrypto />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/projects" element={<Projects />} />
+        <Route path="/legal" element={<Legal />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
-      <ChatBot />
     </Router>
   );
 }

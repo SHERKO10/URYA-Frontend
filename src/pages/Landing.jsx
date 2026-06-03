@@ -1,179 +1,166 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { Shield, Brain, Lock, Smartphone, BarChart3, BookOpen, ArrowRight, ExternalLink, TrendingUp, PiggyBank, AlertTriangle } from 'lucide-react';
+import {
+  Shield, Brain, Lock, Smartphone, BarChart3,
+  ArrowRight, TrendingUp, AlertTriangle,
+  Mail, Linkedin, Send,
+  CheckCircle2, Users, Globe, Cpu,
+  ChevronRight, ExternalLink,
+} from 'lucide-react';
 import Hero from '../components/Hero';
 import Navbar from '../components/Navbar';
+import cubelogo from '../assets/cubelogo.png';
+import partner1 from '../assets/partner1.png';
+import partner2 from '../assets/partner2.png';
 
+/* ═══════════════════════════════════════════ */
+/*  Phishing Simulator (Interactive Demo)     */
+/* ═══════════════════════════════════════════ */
 const PhishingSimulator = () => {
-  const [step, setStep] = useState('idle'); // 'idle' | 'sms' | 'scanning' | 'blocked'
+  const [step, setStep] = useState('idle');
   const [logs, setLogs] = useState([]);
 
   const runSimulation = () => {
     setStep('sms');
     setLogs([]);
-    
-    // Step 2: Start Scan
+
     setTimeout(() => {
       setStep('scanning');
-      addLog('Démarrage de la surveillance IA locale...');
-      
-      setTimeout(() => {
-        addLog('Analyse sémantique du texte : SMS suspect détecté.');
-      }, 800);
+      addLog('Initialisation du moteur IA local…');
 
-      setTimeout(() => {
-        addLog('Heuristique URL : Nom de domaine non officiel.');
-      }, 1600);
-
-      setTimeout(() => {
-        addLog('Calcul de confiance : 98.4% Phishing.');
-      }, 2400);
-
-      // Step 3: Block
-      setTimeout(() => {
-        setStep('blocked');
-      }, 3200);
-
+      setTimeout(() => addLog('Analyse sémantique NLP : contenu suspect identifié.'), 800);
+      setTimeout(() => addLog('Vérification heuristique URL : domaine non authentifié.'), 1600);
+      setTimeout(() => addLog('Score de confiance : 98.4% → Classification : Phishing.'), 2400);
+      setTimeout(() => setStep('blocked'), 3200);
     }, 2000);
   };
 
-  const addLog = (msg) => {
-    setLogs((prev) => [...prev, `> ${msg}`]);
-  };
-
-  const reset = () => {
-    setStep('idle');
-    setLogs([]);
-  };
+  const addLog = (msg) => setLogs((prev) => [...prev, `> ${msg}`]);
+  const reset = () => { setStep('idle'); setLogs([]); };
 
   return (
-    <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-      {/* Left Text */}
+    <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center max-w-6xl mx-auto">
+      {/* Left — Text */}
       <div className="space-y-6 text-left">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-500/10 border border-primary-500/20 rounded-full text-primary-400 text-xs font-semibold">
-          🛡️ SÉCURITÉ MOBILE ACTIVE
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-50 border border-primary-200 rounded-full text-primary-700 text-xs font-semibold tracking-wide">
+          <Shield className="w-3.5 h-3.5" />
+          PROTECTION MOBILE EN TEMPS RÉEL
         </div>
-        <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-          Comment <span className="gradient-text">Scamurai</span> vous protège en temps réel.
+        <h3 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight tracking-tight">
+          Comment{' '}
+          <span className="gradient-text">Scamurai</span>{' '}
+          neutralise les menaces.
         </h3>
-        <p className="text-dark-400 leading-relaxed text-sm md:text-base">
-          Scamurai intègre un modèle d'intelligence artificielle locale qui tourne directement sur votre smartphone. 
-          Il intercepte les messages malveillants avant même qu'ils n'atteignent votre boîte de réception et neutralise les liens de phishing.
+        <p className="text-slate-600 leading-relaxed text-sm md:text-base max-w-lg">
+          Notre moteur d'IA locale s'exécute directement sur l'appareil.
+          Il analyse en temps réel chaque SMS et lien entrant, identifie les
+          tentatives d'hameçonnage et neutralise les menaces — sans envoyer
+          vos données à un serveur externe.
         </p>
-        
-        <div className="pt-4">
+
+        <div className="pt-2">
           {step === 'idle' ? (
-            <button
-              onClick={runSimulation}
-              className="btn-glow flex items-center gap-2"
-            >
+            <button onClick={runSimulation} className="btn-glow flex items-center gap-2 text-sm">
               Lancer la simulation
-              <ArrowRight className="w-5 h-5 animate-pulse" />
+              <ArrowRight className="w-4 h-4" />
             </button>
           ) : (
-            <button
-              onClick={reset}
-              className="btn-secondary"
-            >
-              Réinitialiser la simulation
+            <button onClick={reset} className="btn-secondary text-sm">
+              Réinitialiser
             </button>
           )}
         </div>
       </div>
 
-      {/* Right Phone Mockup */}
+      {/* Right — Phone Mockup */}
       <div className="flex justify-center">
-        <div className="relative w-[280px] sm:w-[300px] h-[560px] sm:h-[600px] bg-dark-950 border-4 border-dark-800 rounded-[40px] shadow-2xl shadow-primary-500/10 overflow-hidden flex flex-col">
-          {/* Speaker / Camera Notch */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-dark-800 rounded-b-2xl z-20 flex justify-center items-center">
-            <div className="w-12 h-1 bg-dark-950 rounded-full" />
+        <div className="relative w-[270px] sm:w-[290px] h-[540px] sm:h-[580px] bg-slate-950 border-4 border-slate-800 rounded-[40px] shadow-2xl shadow-slate-900/20 overflow-hidden flex flex-col">
+          {/* Notch */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-slate-800 rounded-b-2xl z-20 flex justify-center items-center">
+            <div className="w-10 h-0.5 bg-slate-950 rounded-full" />
           </div>
 
-          {/* Status Bar */}
-          <div className="h-10 pt-2 px-6 flex justify-between items-center text-[10px] text-dark-500 font-semibold z-10">
+          {/* Status bar */}
+          <div className="h-9 pt-2 px-5 flex justify-between items-center text-[9px] text-slate-500 font-semibold z-10">
             <span>14:02</span>
             <div className="flex items-center gap-1">
               <span>5G</span>
-              <div className="w-4 h-2 border border-dark-500 rounded-[2px]" />
+              <div className="w-3.5 h-1.5 border border-slate-500 rounded-sm" />
             </div>
           </div>
 
-          {/* Inner Screen Content */}
-          <div className="flex-1 p-4 flex flex-col justify-between relative bg-[#040812]">
-            {/* Background Mesh (Inside Phone) */}
-            <div className="absolute inset-0 bg-gradient-to-b from-primary-950/10 via-transparent to-dark-950 pointer-events-none" />
+          {/* Screen */}
+          <div className="flex-1 p-3.5 flex flex-col justify-between relative bg-slate-50">
+            <div className="absolute inset-0 bg-gradient-to-b from-primary-500/5 via-transparent to-slate-100 pointer-events-none" />
 
-            {/* Step: Idle */}
+            {/* Idle */}
             {step === 'idle' && (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-4">
-                <div className="w-16 h-16 bg-dark-900 border border-dark-800 rounded-2xl flex items-center justify-center mb-4">
-                  <Smartphone className="w-8 h-8 text-dark-500" />
+                <div className="w-14 h-14 bg-white border border-slate-200 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+                  <Smartphone className="w-7 h-7 text-primary-500" />
                 </div>
-                <p className="text-dark-400 text-xs">Prêt pour la simulation</p>
-                <p className="text-dark-500 text-[10px] mt-1">Appuyez sur "Lancer la simulation" à gauche.</p>
+                <p className="text-slate-700 font-semibold text-xs">Prêt pour la simulation</p>
+                <p className="text-slate-400 text-[10px] mt-1">Cliquez sur « Lancer la simulation ».</p>
               </div>
             )}
 
-            {/* Step: SMS Received */}
+            {/* SMS + Scanning + Blocked */}
             {(step === 'sms' || step === 'scanning' || step === 'blocked') && (
-              <div className="flex-1 flex flex-col gap-4">
-                {/* Mock SMS Card */}
+              <div className="flex-1 flex flex-col gap-3">
+                {/* SMS Card */}
                 <motion.div
-                  initial={{ y: -50, opacity: 0 }}
+                  initial={{ y: -40, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  className={`p-4 rounded-2xl border transition-all duration-300 ${
+                  className={`p-3.5 rounded-2xl border transition-all duration-300 ${
                     step === 'blocked'
-                      ? 'bg-red-500/10 border-red-500/30'
-                      : 'bg-dark-900 border-dark-800'
+                      ? 'bg-red-50/80 border-red-200 text-red-900'
+                      : 'bg-white border-slate-200 text-slate-800'
                   }`}
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 bg-dark-800 rounded-full flex items-center justify-center text-[10px] font-bold text-dark-300">
-                      S
-                    </div>
-                    <span className="text-[11px] font-bold text-dark-300">SMS Suspect (Inconnu)</span>
+                    <div className="w-5 h-5 bg-slate-100 rounded-full flex items-center justify-center text-[9px] font-bold text-slate-600">S</div>
+                    <span className="text-[10px] font-bold text-slate-700">SMS Suspect</span>
                   </div>
-                  <p className="text-[10px] text-dark-400 leading-normal">
-                    INFO T-MONEY : Votre compte a été temporairement restreint. Mettez à jour vos informations sur :
-                    <span className="text-primary-400 block mt-1 underline">http://t-money-securite-login.com</span>
+                  <p className="text-[9px] text-slate-600 leading-normal">
+                    INFO T-MONEY : Votre compte a été restreint. Mettez à jour vos informations :
+                    <span className="text-primary-600 block mt-1 underline">http://t-money-securite-login.com</span>
                   </p>
                 </motion.div>
 
-                {/* Step: Scanning Animation */}
+                {/* Scanning */}
                 {step === 'scanning' && (
-                  <div className="flex-1 flex flex-col justify-end gap-3 pb-4">
-                    <div className="flex items-center justify-center gap-2 py-2">
-                      <div className="w-2 h-2 bg-primary-500 rounded-full animate-ping" />
-                      <span className="text-[10px] text-primary-400 font-mono">Scan IA de Scamurai...</span>
+                  <div className="flex-1 flex flex-col justify-end gap-2 pb-2">
+                    <div className="flex items-center justify-center gap-2 py-1.5">
+                      <div className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-ping" />
+                      <span className="text-[9px] text-primary-600 font-mono">Analyse IA en cours…</span>
                     </div>
-                    {/* Console Logs */}
-                    <div className="bg-dark-950 border border-dark-800 rounded-xl p-3 font-mono text-[8px] text-dark-400 space-y-1 max-h-[160px] overflow-y-auto">
-                      {logs.map((log, index) => (
-                        <div key={index} className="leading-tight">{log}</div>
+                    <div className="bg-slate-900 border border-slate-700 rounded-xl p-2.5 font-mono text-[7px] text-slate-300 space-y-0.5 max-h-[140px] overflow-y-auto">
+                      {logs.map((log, i) => (
+                        <div key={i} className="leading-tight">{log}</div>
                       ))}
                     </div>
                   </div>
                 )}
 
-                {/* Step: Blocked Notification */}
+                {/* Blocked */}
                 {step === 'blocked' && (
                   <motion.div
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="flex-1 flex flex-col items-center justify-center text-center p-4 gap-4"
+                    className="flex-1 flex flex-col items-center justify-center text-center p-3 gap-3"
                   >
-                    <div className="w-14 h-14 bg-red-500/20 border border-red-500/30 rounded-full flex items-center justify-center animate-bounce">
-                      <Shield className="w-7 h-7 text-red-500" />
+                    <div className="w-12 h-12 bg-red-50 border border-red-200 rounded-full flex items-center justify-center animate-bounce">
+                      <Shield className="w-6 h-6 text-red-600" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-red-400 mb-1">MENACE PHISHING BLOQUÉE</h4>
-                      <p className="text-[10px] text-dark-400 leading-relaxed px-2">
-                        Le moteur IA local a identifié ce message comme une tentative d'hameçonnage ciblé. Le lien a été neutralisé.
+                      <h4 className="text-xs font-bold text-red-600 mb-1">MENACE NEUTRALISÉE</h4>
+                      <p className="text-[9px] text-slate-600 leading-relaxed px-1">
+                        Le moteur IA local a identifié une tentative d'hameçonnage. Le lien a été bloqué.
                       </p>
                     </div>
-                    <div className="px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-lg text-[9px] text-red-400 font-mono">
-                      Confiance : 98.4% (Modèle local v1.0)
+                    <div className="px-2.5 py-1 bg-red-50 border border-red-200 rounded-lg text-[8px] text-red-700 font-mono font-semibold">
+                      Confiance : 98.4% · Modèle local v1.0
                     </div>
                   </motion.div>
                 )}
@@ -186,120 +173,282 @@ const PhishingSimulator = () => {
   );
 };
 
-const Landing = () => {
-  const navigate = useNavigate();
+/* ═══════════════════════════════════════════ */
+/*  Contact Form                              */
+/* ═══════════════════════════════════════════ */
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: '', email: '', company: '', role: '', message: '',
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 5000);
+  };
 
   return (
-    <div className="min-h-screen bg-dark-950">
+    <div className="grid md:grid-cols-2 gap-12 lg:gap-16 max-w-6xl mx-auto">
+      {/* Left — Info */}
+      <div className="space-y-8">
+        <div>
+          <h3 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
+            Planifions un{' '}
+            <span className="gradient-text">échange</span>.
+          </h3>
+          <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+            Vous souhaitez évaluer nos solutions pour votre organisation ?
+            Remplissez le formulaire et notre équipe vous recontactera sous 24h
+            pour organiser une démonstration personnalisée.
+          </p>
+        </div>
+
+        <div className="space-y-5">
+          {[
+            { icon: <Mail className="w-5 h-5" />, label: 'Email', value: 'teamurya@gmail.com', href: 'mailto:teamurya@gmail.com' },
+            { icon: <Linkedin className="w-5 h-5" />, label: 'LinkedIn', value: 'URYA Projet', href: 'https://www.linkedin.com/company/urya-projet/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3B%2FRvsLFyhRtSuJTzEP6nt7w%3D%3D' },
+          ].map((item) => (
+            <a key={item.label} href={item.href} target={item.label === 'LinkedIn' ? '_blank' : '_self'} rel="noreferrer" className="flex items-center gap-4 group">
+              <div className="w-10 h-10 bg-primary-50 border border-primary-100 rounded-xl flex items-center justify-center text-primary-600 shrink-0 group-hover:bg-primary-100 transition-colors">
+                {item.icon}
+              </div>
+              <div>
+                <p className="text-xs text-slate-400 font-medium">{item.label}</p>
+                <p className="text-sm text-slate-800 font-semibold group-hover:text-primary-600 transition-colors">{item.value}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Right — Form */}
+      <div>
+        {submitted ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="card-glass p-10 text-center h-full flex flex-col items-center justify-center"
+          >
+            <div className="w-16 h-16 bg-primary-50 border border-primary-200 rounded-full flex items-center justify-center mb-4">
+              <CheckCircle2 className="w-8 h-8 text-primary-600" />
+            </div>
+            <h4 className="text-xl font-bold text-slate-900 mb-2">Message envoyé</h4>
+            <p className="text-slate-500 text-sm">Notre équipe vous recontactera sous 24h.</p>
+          </motion.div>
+        ) : (
+          <form onSubmit={handleSubmit} className="card-glass p-6 md:p-8 space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Nom complet</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="Jean Dupont"
+                  className="input-field"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Email professionnel</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="j.dupont@entreprise.com"
+                  className="input-field"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Entreprise</label>
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  required
+                  placeholder="Nom de l'entreprise"
+                  className="input-field"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Fonction</label>
+                <input
+                  type="text"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  placeholder="DSI, RSSI, CTO…"
+                  className="input-field"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Votre besoin</label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                rows={4}
+                placeholder="Décrivez brièvement votre besoin en cybersécurité…"
+                className="input-field resize-none"
+              />
+            </div>
+            <button type="submit" className="w-full btn-glow flex items-center justify-center gap-2 text-sm">
+              Envoyer la demande
+              <Send className="w-4 h-4" />
+            </button>
+            <p className="text-[11px] text-slate-400 text-center">
+              Vos informations restent confidentielles et ne sont jamais partagées.
+            </p>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════════════════════════ */
+/*  Landing Page                              */
+/* ═══════════════════════════════════════════ */
+const Landing = () => {
+  const fadeInUp = {
+    initial: { opacity: 0, y: 40 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '-50px' },
+    transition: { duration: 0.7 },
+  };
+
+  return (
+    <div className="min-h-screen bg-white text-slate-900 overflow-x-hidden">
       <Navbar />
       <Hero />
 
-      {/* About URYA Section */}
-      <section className="py-24 px-4 bg-dark-900/50">
+      {/* ═══ About Section ═══ */}
+      <section id="about" className="section-padding">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="gradient-text">Qu'est-ce que URYA ?</span>
+          <motion.div {...fadeInUp} className="text-center mb-16">
+            <span className="inline-block px-4 py-1.5 bg-primary-50 text-primary-700 text-xs font-semibold rounded-full border border-primary-100 mb-4 tracking-wide uppercase">
+              Qui sommes-nous
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-5">
+              Technologies de protection{' '}
+              <span className="gradient-text">souveraines</span>.
             </h2>
-            <p className="text-dark-400 max-w-3xl mx-auto text-lg">
-              URYA est une entreprise spécialisée dans la <strong className="text-primary-400">protection des données par cryptographie et intelligence artificielle</strong>.
-              Nous développons des solutions de cybersécurité avancées pour les entreprises africaines.
+            <p className="text-slate-600 max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
+              URYA conçoit des solutions de cybersécurité combinant{' '}
+              <strong className="text-slate-800">cryptographie post-quantique</strong> et{' '}
+              <strong className="text-slate-800">intelligence artificielle comportementale</strong>.
+              Notre mission : garantir que vos données restent sous votre contrôle,
+              sur votre infrastructure, sans dépendance à des serveurs étrangers.
             </p>
           </motion.div>
 
           {/* Key Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
-              { value: '+38%', label: 'Cyberattaques en 2024', icon: <TrendingUp className="w-8 h-8 text-red-500 mx-auto" /> },
-              { value: '3.55M', label: 'Utilisateurs Mobile Money au Togo', icon: <Smartphone className="w-8 h-8 text-primary-400 mx-auto" /> },
-              { value: '81%', label: 'Trouvent les frais trop élevés', icon: <PiggyBank className="w-8 h-8 text-emerald-500 mx-auto" /> },
-              { value: '50%+', label: 'Problèmes de sécurité signalés', icon: <AlertTriangle className="w-8 h-8 text-amber-500 mx-auto" /> },
-            ].map((stat, index) => (
+              { value: '+38%', label: 'Hausse des cyberattaques en 2024', icon: <TrendingUp className="w-6 h-6" />, color: 'text-red-500' },
+              { value: '3.55M', label: 'Utilisateurs Mobile Money ciblés', icon: <Smartphone className="w-6 h-6" />, color: 'text-primary-600' },
+              { value: '<3ms', label: 'Latence de détection IA locale', icon: <Cpu className="w-6 h-6" />, color: 'text-blue-500' },
+              { value: '24/7', label: 'Monitoring comportemental actif', icon: <Shield className="w-6 h-6" />, color: 'text-emerald-500' },
+            ].map((stat, i) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="card-glass p-6 text-center"
+                transition={{ delay: i * 0.1 }}
+                className="card-glass p-5 md:p-6 text-center"
               >
-                <div className="text-3xl mb-3 flex justify-center">{stat.icon}</div>
-                <div className="text-2xl md:text-3xl font-bold gradient-text">{stat.value}</div>
-                <div className="text-dark-500 text-sm mt-1">{stat.label}</div>
+                <div className={`${stat.color} mb-3 flex justify-center`}>{stat.icon}</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">{stat.value}</div>
+                <div className="text-slate-500 text-[11px] md:text-xs mt-1.5 font-medium leading-tight">{stat.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Solutions Section */}
-      <section className="py-24 px-4">
+      {/* ═══ Solutions Section ═══ */}
+      <section id="solutions" className="section-padding section-alt">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="gradient-text">Nos Solutions de Cybersécurité</span>
+          <motion.div {...fadeInUp} className="text-center mb-16">
+            <span className="inline-block px-4 py-1.5 bg-primary-50 text-primary-700 text-xs font-semibold rounded-full border border-primary-100 mb-4 tracking-wide uppercase">
+              Nos Solutions
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-5">
+              Architecture de sécurité{' '}
+              <span className="gradient-text">multi-couches</span>.
             </h2>
-            <p className="text-dark-400 max-w-2xl mx-auto">
-              Une stratégie à 3 niveaux pour protéger du particulier jusqu'à la grande entreprise.
+            <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+              Trois niveaux de protection adaptés à chaque profil — du particulier
+              aux grandes institutions.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
             {[
               {
-                icon: <Smartphone className="w-12 h-12" />,
+                icon: <Smartphone className="w-10 h-10" />,
                 title: 'Scamurai',
-                subtitle: 'Freemium Mobile B2C/B2B',
-                description: 'Application mobile de sécurité avec IA locale pour filtrer le phishing et les menaces en temps réel.',
-                features: ['Filtrage SMS/Appels IA', 'VPN Local Anti-Phishing', 'Mode Gratuit & Premium'],
-                color: 'from-accent-500 to-primary-600',
+                subtitle: 'Protection Mobile · B2C/B2B',
+                description: 'Application mobile avec moteur IA embarqué. Filtrage en temps réel des SMS, appels et liens malveillants. Aucune donnée exportée.',
+                features: ['IA locale on-device', 'Filtrage SMS/Appels', 'VPN Anti-Phishing DNS', 'Mode Gratuit & Premium'],
+                accent: 'from-primary-500 to-primary-600',
+                accentLight: 'bg-primary-50 border-primary-100 text-primary-600',
               },
               {
-                icon: <Shield className="w-12 h-12" />,
+                icon: <Shield className="w-10 h-10" />,
                 title: 'LORA',
-                subtitle: 'Sécurité Automatisée pour PME',
-                description: 'La solution abordable pour sécuriser les réseaux et les terminaux des petites et moyennes entreprises.',
-                features: ['Déploiement Rapide', 'Sécurité Réseau', 'Gestion Centralisée'],
-                color: 'from-cyan-500 to-blue-600',
+                subtitle: 'Sécurité Automatisée · PME',
+                description: 'Suite de sécurité réseau déployable en 48h. Surveillance automatisée, gestion centralisée, conçue pour les budgets PME.',
+                features: ['Déploiement rapide', 'Sécurité périmétrique', 'Gestion centralisée', 'Tarification accessible'],
+                accent: 'from-blue-500 to-blue-600',
+                accentLight: 'bg-blue-50 border-blue-100 text-blue-600',
               },
               {
-                icon: <Brain className="w-12 h-12" />,
+                icon: <Brain className="w-10 h-10" />,
                 title: 'MAHAFA',
-                subtitle: 'Intelligence Cryptographique',
-                description: 'Notre offre phare pour grandes entreprises. Analyse comportementale avancée avec Kill-Switch et réseaux de neurones.',
-                features: ['Réseaux LSTM', 'Kill-Switch Cryptographique', 'API Entreprise'],
-                color: 'from-violet-500 to-purple-600',
+                subtitle: 'Intelligence Cryptographique · Entreprises',
+                description: 'Solution phare pour grandes organisations. Analyse comportementale LSTM, détection d\'anomalies en temps réel et Kill-Switch cryptographique.',
+                features: ['Réseaux LSTM + Random Forest', 'Kill-Switch cryptographique', 'API REST sécurisée', 'Détection temps réel'],
+                accent: 'from-purple-500 to-purple-600',
+                accentLight: 'bg-purple-50 border-purple-100 text-purple-600',
               },
-            ].map((project, index) => (
+            ].map((solution, i) => (
               <motion.div
-                key={project.title}
+                key={solution.title}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.15 }}
-                className="card-glass card-hover p-8 relative overflow-hidden group"
+                transition={{ delay: i * 0.15 }}
+                className="card-glass card-hover p-7 md:p-8 relative overflow-hidden group"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                <div className="text-primary-400 mb-6 group-hover:scale-110 transition-transform duration-300">{project.icon}</div>
-                <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                <p className="text-accent-400 text-sm mb-4">{project.subtitle}</p>
-                <p className="text-dark-400 mb-6">{project.description}</p>
-                <ul className="space-y-2 relative z-10">
-                  {project.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2 text-dark-300 text-sm">
-                      <Lock className="w-4 h-4 text-accent-500" />
-                      {feature}
+                {/* Gradient top bar */}
+                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${solution.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+
+                <div className={`w-14 h-14 ${solution.accentLight} border rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                  {solution.icon}
+                </div>
+                <h3 className="text-xl font-bold mb-1 text-slate-900">{solution.title}</h3>
+                <p className="text-xs font-semibold text-slate-400 mb-4 uppercase tracking-wider">{solution.subtitle}</p>
+                <p className="text-slate-600 mb-6 text-sm leading-relaxed">{solution.description}</p>
+                <ul className="space-y-2.5 border-t border-slate-100 pt-5">
+                  {solution.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2.5 text-slate-700 text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-primary-500 shrink-0" />
+                      {f}
                     </li>
                   ))}
                 </ul>
@@ -309,189 +458,184 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Demo Section */}
-      <section className="py-24 px-4 bg-dark-900/50">
-        <PhishingSimulator />
-      </section>
-
-      {/* Pricing Section */}
-      <section className="py-24 px-4">
+      {/* ═══ Demo Section ═══ */}
+      <section id="demo" className="section-padding">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="gradient-text">Packages Scamurai</span>
+          <motion.div {...fadeInUp} className="text-center mb-16">
+            <span className="inline-block px-4 py-1.5 bg-primary-50 text-primary-700 text-xs font-semibold rounded-full border border-primary-100 mb-4 tracking-wide uppercase">
+              Démonstration
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-5">
+              Voyez la protection{' '}
+              <span className="gradient-text">en action</span>.
             </h2>
-            <p className="text-dark-400 max-w-2xl mx-auto">
-              Testez notre protection IA gratuitement, puis passez au niveau supérieur pour une sécurité totale.
+            <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+              Testez notre simulation de détection de phishing en temps réel.
+              Le moteur IA analyse, identifie et neutralise la menace en moins de 3 secondes.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Freemium */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="card-glass p-8 relative overflow-hidden"
-            >
-              <h3 className="text-2xl font-bold mb-2">Gratuit</h3>
-              <div className="text-4xl font-bold text-white mb-6">0 CFA<span className="text-lg text-dark-400 font-normal">/mois</span></div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-dark-300">
-                  <Shield className="w-5 h-5 text-primary-500" />
-                  Surveillance IA Locale de base
-                </li>
-                <li className="flex items-center gap-3 text-dark-300">
-                  <Shield className="w-5 h-5 text-primary-500" />
-                  Alerte sur les numéros suspects
-                </li>
-                <li className="flex items-center gap-3 text-dark-500 opacity-50">
-                  <Lock className="w-5 h-5" />
-                  Pas de VPN DNS Anti-Phishing
-                </li>
-                <li className="flex items-center gap-3 text-dark-500 opacity-50">
-                  <Lock className="w-5 h-5" />
-                  Pas d'analyse heuristique Gemini
-                </li>
-              </ul>
-              <button className="w-full btn-secondary">Télécharger l'App</button>
-            </motion.div>
-
-            {/* Premium */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="card-glass p-8 relative overflow-hidden gradient-border"
-            >
-              <div className="absolute top-4 right-4 bg-accent-500 text-white text-xs font-bold px-3 py-1 rounded-full">Recommandé</div>
-              <h3 className="text-2xl font-bold mb-2 text-accent-400">Premium</h3>
-              <div className="text-4xl font-bold text-white mb-6">Abonnement<span className="text-lg text-dark-400 font-normal">/mois</span></div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-white font-medium">
-                  <Shield className="w-5 h-5 text-accent-500" />
-                  Tout le plan Gratuit inclus
-                </li>
-                <li className="flex items-center gap-3 text-white font-medium">
-                  <Shield className="w-5 h-5 text-accent-500" />
-                  VPN Local Anti-Phishing Actif
-                </li>
-                <li className="flex items-center gap-3 text-white font-medium">
-                  <Shield className="w-5 h-5 text-accent-500" />
-                  Analyse Heuristique (Gemini IA)
-                </li>
-                <li className="flex items-center gap-3 text-white font-medium">
-                  <Shield className="w-5 h-5 text-accent-500" />
-                  Clavier Sécurisé Intégré
-                </li>
-              </ul>
-              <button className="w-full btn-glow">Passer au Premium</button>
-            </motion.div>
-          </div>
+          <PhishingSimulator />
         </div>
       </section>
 
-      {/* Mission Section */}
-      <section className="py-24 px-4 bg-dark-900/50">
+      {/* ═══ Partners Section ═══ */}
+      <section className="section-padding section-alt">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="gradient-text">Notre Mission</span>
+          <motion.div {...fadeInUp} className="text-center mb-12">
+            <span className="inline-block px-4 py-1.5 bg-primary-50 text-primary-700 text-xs font-semibold rounded-full border border-primary-100 mb-4 tracking-wide uppercase">
+              Écosystème
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-5">
+              Ils nous font{' '}
+              <span className="gradient-text">confiance</span>.
             </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+              URYA s'inscrit dans un écosystème d'innovation reconnu.
+              Nos partenaires stratégiques valident notre approche technologique.
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {/* Partner logos */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto items-center">
             {[
               {
-                icon: <Shield className="w-8 h-8" />,
-                title: 'Confidentialité',
-                description: 'Garantir la protection totale des données sensibles par chiffrement AES-256 et RSA-4096',
+                name: 'CUBE',
+                description: 'Incubateur & Accélérateur Technologique',
+                logo: partner1,
+                isImage: true,
               },
               {
-                icon: <Lock className="w-8 h-8" />,
-                title: 'Intégrité',
-                description: 'Assurer que les données ne sont pas altérées grâce aux signatures numériques',
+                name: 'OIF & D-CLIC',
+                description: 'Organisation Internationale de la Francophonie',
+                logo: partner2,
+                isImage: true,
               },
-              {
-                icon: <Brain className="w-8 h-8" />,
-                title: 'Authentification',
-                description: 'Vérifier l\'identité des utilisateurs par des protocoles sécurisés (JWT, biométrie)',
-              },
-              {
-                icon: <BarChart3 className="w-8 h-8" />,
-                title: 'Non-répudiation',
-                description: 'Garantir la traçabilité complète des transactions et opérations',
-              },
-            ].map((item, index) => (
+            ].map((partner, i) => (
               <motion.div
-                key={item.title}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                key={partner.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="card-glass p-6 flex gap-4 items-start"
+                transition={{ delay: i * 0.1 }}
+                className="card-glass p-8 text-center flex flex-col items-center"
               >
-                <div className="text-primary-400 shrink-0">{item.icon}</div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-dark-400">{item.description}</p>
-                </div>
+                {partner.isImage ? (
+                  <img src={partner.logo} alt={partner.name} className="h-20 w-auto object-contain mb-4 hover:scale-105 transition-all duration-500" />
+                ) : (
+                  <div className="w-16 h-16 bg-primary-50 border border-primary-100 rounded-2xl flex items-center justify-center mb-4">
+                    {partner.icon}
+                  </div>
+                )}
+                <h4 className="text-lg font-bold text-slate-800 mb-1">{partner.name}</h4>
+                <p className="text-xs text-slate-500 leading-relaxed">{partner.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="card-glass p-12 relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-primary-600/10" />
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="gradient-text">Rejoignez l'Aventure URYA</span>
-              </h2>
-              <p className="text-dark-400 mb-8 max-w-xl mx-auto">
-                Découvrez nos solutions de cybersécurité et protégez vos données dès aujourd'hui.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => navigate('/console')}
-                  className="btn-glow"
-                >
-                  Tester la Console
-                </button>
-                <button
-                  onClick={() => navigate('/projects')}
-                  className="btn-secondary"
-                >
-                  Voir les projets
-                </button>
-              </div>
-            </div>
+      {/* ═══ Contact Section ═══ */}
+      <section id="contact" className="section-padding">
+        <div className="max-w-7xl mx-auto">
+          <motion.div {...fadeInUp} className="text-center mb-16">
+            <span className="inline-block px-4 py-1.5 bg-primary-50 text-primary-700 text-xs font-semibold rounded-full border border-primary-100 mb-4 tracking-wide uppercase">
+              Contact
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-5">
+              Protégez vos actifs{' '}
+              <span className="gradient-text">dès maintenant</span>.
+            </h2>
           </motion.div>
+
+          <ContactForm />
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-dark-800">
-        <div className="max-w-7xl mx-auto text-center text-dark-500">
-          <p>© 2026 URYA. Tous droits réservés.</p>
+      {/* ═══ Footer ═══ */}
+      <footer className="bg-slate-900 text-slate-300">
+        {/* Main footer */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+            {/* Brand */}
+            <div className="sm:col-span-2 lg:col-span-1">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-primary-400" />
+                </div>
+                <span className="text-xl font-bold text-white tracking-tight">URYA</span>
+              </div>
+              <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
+                Souveraineté numérique et protection intelligente.
+                Cryptographie avancée et IA comportementale.
+              </p>
+            </div>
+
+            {/* Solutions */}
+            <div>
+              <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Solutions</h4>
+              <ul className="space-y-2.5">
+                {['Scamurai · Mobile', 'LORA · PME', 'MAHAFA · Entreprises'].map((item) => (
+                  <li key={item}>
+                    <span className="text-sm text-slate-400 hover:text-white transition-colors cursor-default">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Entreprise */}
+            <div>
+              <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Entreprise</h4>
+              <ul className="space-y-2.5">
+                {[
+                  { label: 'À propos', href: '#about' },
+                  { label: 'Démonstration', href: '#demo' },
+                  { label: 'Contact', href: '#contact' },
+                ].map((item) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.href}
+                      className="text-sm text-slate-400 hover:text-white transition-colors"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Contact</h4>
+              <ul className="space-y-2.5">
+                <li>
+                  <a href="mailto:teamurya@gmail.com" className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors">
+                    <Mail className="w-4 h-4 text-slate-500" /> teamurya@gmail.com
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/company/urya-projet/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3B%2FRvsLFyhRtSuJTzEP6nt7w%3D%3D" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors">
+                    <Linkedin className="w-4 h-4 text-slate-500" /> LinkedIn
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-slate-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-slate-500">
+              © {new Date().getFullYear()} URYA Technologies. Tous droits réservés.
+            </p>
+            <div className="flex items-center gap-4">
+              <Link to="/legal" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Mentions légales</Link>
+              <Link to="/privacy" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">Politique de confidentialité</Link>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

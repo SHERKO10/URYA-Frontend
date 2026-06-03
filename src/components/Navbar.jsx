@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import uryaLogo from '../assets/urya.jpg';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,36 +15,56 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const navLinks = [
-    { name: 'Accueil', path: '/' },
-    { name: 'Solutions', path: '/projects' },
-    { name: 'Console Tech', path: '/console' },
+    { name: 'À propos', href: '#about' },
+    { name: 'Solutions', href: '#solutions' },
+    { name: 'Démo', href: '#demo' },
+    { name: 'Contact', href: '#contact' },
   ];
 
-  const whatsappNumberRaw = import.meta.env.VITE_WHATSAPP_NUMBER || '22890000000';
-  const whatsappNumber = String(whatsappNumberRaw).replace(/\D/g, '');
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    "Bonjour URYA, je souhaite planifier une démonstration de vos solutions de cybersécurité."
-  )}`;
+  const scrollTo = (href) => {
+    setIsMobileMenuOpen(false);
+    const el = document.querySelector(href);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  // Determine if hero is visible (dark background)
+  const isDarkHero = !isScrolled;
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-dark-950/80 backdrop-blur-xl border-b border-dark-800'
+          ? 'bg-white/85 backdrop-blur-xl border-b border-slate-200/80 shadow-sm'
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
+          <a
+            href="#"
+            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            className="flex items-center gap-3"
+          >
             <motion.div
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.08 }}
               transition={{ duration: 0.3 }}
-              className="w-10 h-10 rounded-xl overflow-hidden"
+              className="w-10 h-10 rounded-xl overflow-hidden shadow-sm"
             >
               <img
                 src={uryaLogo}
@@ -54,42 +72,54 @@ const Navbar = () => {
                 className="w-full h-full object-cover"
               />
             </motion.div>
-            <span className="text-xl font-bold gradient-text hidden sm:block">URYA</span>
-          </Link>
+            <span className={`text-xl font-bold tracking-tight hidden sm:block transition-colors duration-300 ${
+              isDarkHero ? 'text-white' : 'text-slate-900'
+            }`}>
+              URYA
+            </span>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-                  location.pathname === link.path
-                    ? 'bg-primary-500/20 text-primary-400'
-                    : 'text-dark-300 hover:text-white hover:bg-dark-800'
+              <button
+                key={link.href}
+                onClick={() => scrollTo(link.href)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  isDarkHero
+                    ? 'text-slate-200 hover:text-white hover:bg-white/10'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 {link.name}
-              </Link>
+              </button>
             ))}
           </div>
 
-          {/* Action Button */}
-          <div className="hidden md:flex items-center gap-3">
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-primary px-6 py-2.5 text-sm font-medium rounded-xl transition-all shadow-lg hover:shadow-primary-500/20"
+          {/* CTA Button */}
+          <div className="hidden md:flex items-center">
+            <button
+              onClick={() => scrollTo('#contact')}
+              className={`group flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                isDarkHero
+                  ? 'bg-white text-slate-900 hover:bg-slate-100 shadow-lg'
+                  : 'bg-primary-600 text-white hover:bg-primary-500 shadow-lg shadow-primary-500/20'
+              }`}
             >
-              Demander une Démo
-            </a>
+              Planifier un échange
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </button>
           </div>
 
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-dark-400 hover:text-white"
+            className={`md:hidden p-2 rounded-lg transition-colors ${
+              isDarkHero
+                ? 'text-slate-200 hover:text-white hover:bg-white/10'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+            aria-label="Menu"
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -107,32 +137,27 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-dark-950/95 backdrop-blur-xl border-b border-dark-800"
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-lg"
           >
-            <div className="px-4 py-4 space-y-2">
+            <div className="px-4 py-4 space-y-1">
               {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg transition-all ${
-                    location.pathname === link.path
-                      ? 'bg-primary-500/20 text-primary-400'
-                      : 'text-dark-300 hover:text-white hover:bg-dark-800'
-                  }`}
+                <button
+                  key={link.href}
+                  onClick={() => scrollTo(link.href)}
+                  className="block w-full text-left px-4 py-3 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-50 font-medium transition-all"
                 >
                   {link.name}
-                </Link>
+                </button>
               ))}
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-4 py-3 btn-primary text-center font-medium rounded-lg"
-              >
-                Demander une Démo
-              </a>
+              <div className="pt-2 border-t border-slate-100">
+                <button
+                  onClick={() => scrollTo('#contact')}
+                  className="block w-full px-4 py-3 bg-primary-600 text-white text-center font-semibold rounded-xl hover:bg-primary-500 transition-all"
+                >
+                  Planifier un échange
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

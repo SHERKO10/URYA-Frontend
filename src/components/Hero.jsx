@@ -1,148 +1,138 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import uryaLogo from '../assets/urya.jpg';
+import heroBg from '../assets/hero_bg.png';
 
 const Hero = () => {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden mesh-bg">
-      {/* Animated background */}
-      <div className="absolute inset-0">
-        {/* Gradient orbs */}
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/4 left-1/4 w-[30rem] h-[30rem] bg-primary-600/20 rounded-full blur-[100px]"
-        />
-        <motion.div
-          animate={{
-            x: [0, -100, 0],
-            y: [0, 100, 0],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-accent-600/20 rounded-full blur-[100px]"
-        />
+  const scrollTo = (href) => {
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `linear-gradient(hsla(0,0%,100%,0.8) 1px, transparent 1px),
-                              linear-gradient(90deg, hsla(0,0%,100%,0.8) 1px, transparent 1px)`,
-            backgroundSize: '40px 40px',
-            maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)',
-            WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 80%)'
-          }}
-        />
-      </div>
+  return (
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={{
+        backgroundImage: `url(${heroBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Overlay gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/85 z-0" />
+
+      {/* Subtle animated grid pattern */}
+      <div className="absolute inset-0 z-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px',
+        }}
+      />
 
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-12">
-        {/* Logo section */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20 pb-16">
+        {/* Logo */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          className="flex justify-center items-center gap-6 mb-12"
+          className="flex justify-center mb-10"
         >
-          {/* URYA Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="relative"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl blur-xl opacity-50" />
+          <div className="relative">
+            <div className="absolute inset-0 bg-primary-500/30 rounded-2xl blur-2xl scale-150" />
             <img
               src={uryaLogo}
               alt="URYA"
-              className="relative w-24 h-24 md:w-32 md:h-32 object-cover rounded-2xl shadow-2xl"
+              className="relative w-20 h-20 md:w-24 md:h-24 object-cover rounded-2xl shadow-2xl border border-white/10"
             />
-          </motion.div>
+          </div>
+        </motion.div>
 
-
+        {/* Overline */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-6"
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full text-primary-300 text-xs font-semibold tracking-wider uppercase">
+            Cybersécurité & Intelligence Artificielle
+          </span>
         </motion.div>
 
         {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-white leading-[1.1] tracking-tight"
         >
-          <span className="gradient-text">URYA</span>
+          Souveraineté Numérique.
+          <br />
+          <span className="bg-gradient-to-r from-primary-300 via-primary-400 to-primary-300 bg-clip-text text-transparent">
+            Protection Intelligente.
+          </span>
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-xl md:text-2xl text-dark-400 mb-4 max-w-3xl mx-auto"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-base sm:text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed font-light"
         >
-          Protection des Données par Cryptographie & IA
+          Cryptographie avancée et IA comportementale pour la protection
+          de vos actifs numériques. Vos données restent sous votre contrôle.
         </motion.p>
 
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg text-dark-500 mb-12 max-w-xl mx-auto"
-        >
-          Solutions de cybersécurité pour entreprises africaines.
-          <br />
-          Confidentialité • Intégrité • Authentification • Non-répudiation
-        </motion.p>
-
-        {/* CTA Buttons */}
+        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link to="/console" className="btn-glow group">
-            <span className="flex items-center gap-2">
-              Tester la Console
-              <Sparkles className="w-5 h-5" />
-            </span>
-          </Link>
-
-          <Link
-            to="/projects"
-            className="btn-secondary group"
+          <button
+            onClick={() => scrollTo('#solutions')}
+            className="group bg-white text-slate-900 px-8 py-4 rounded-xl font-semibold text-sm sm:text-base hover:bg-slate-100 transition-all duration-300 hover:scale-[1.03] shadow-xl flex items-center gap-2"
           >
-            <span className="flex items-center gap-2">
-              Découvrir nos Solutions
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </Link>
+            Découvrir nos solutions
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <button
+            onClick={() => scrollTo('#contact')}
+            className="group bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-xl font-semibold text-sm sm:text-base hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:scale-[1.03] flex items-center gap-2"
+          >
+            Planifier un échange
+          </button>
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div
+        {/* Trust line */}
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          className="mt-12 text-slate-500 text-xs font-medium tracking-wide uppercase"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-dark-600 rounded-full flex justify-center pt-2"
-          >
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-1.5 bg-primary-500 rounded-full"
-            />
-          </motion.div>
-        </motion.div>
+          Partenaires : CUBE · OIF · D-CLIC
+        </motion.p>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ChevronDown className="w-6 h-6 text-slate-500" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
