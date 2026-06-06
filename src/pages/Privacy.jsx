@@ -35,15 +35,30 @@ const Privacy = () => {
             </div>
 
             <section>
-              <h2 className="text-xl font-semibold text-slate-800 mb-3">1. Collecte des données</h2>
+              <h2 className="text-xl font-semibold text-slate-800 mb-3">1. Collecte et traitement des données</h2>
+              
+              <h3 className="text-lg font-medium text-slate-800 mt-4 mb-2">1.1 Formulaire de contact (Site Web)</h3>
               <p>
                 Nous collectons uniquement les données strictement nécessaires lorsque vous remplissez notre formulaire de contact pour planifier une démonstration :
               </p>
-              <ul className="list-disc pl-5 mt-2 space-y-1">
+              <ul className="list-disc pl-5 mt-2 mb-4 space-y-1">
                 <li>Nom complet</li>
                 <li>Adresse e-mail professionnelle</li>
                 <li>Nom de l'entreprise et fonction</li>
                 <li>Nature de votre besoin</li>
+              </ul>
+
+              <h3 className="text-lg font-medium text-slate-800 mt-4 mb-2">1.2 Application Mobile Scamurai</h3>
+              <ul className="list-disc pl-5 mt-2 space-y-2">
+                <li>
+                  <strong>Fonctionnement local (Mode Gratuit) :</strong> L'analyse des messages, liens et numéros s'effectue de manière strictement locale (on-device) sur votre appareil. Aucune donnée issue de votre messagerie n'est transmise ou stockée sur nos serveurs.
+                </li>
+                <li>
+                  <strong>Mode Premium (Analyse IA) :</strong> Lorsque vous sollicitez l'analyse contextuelle d'une discussion, le texte est envoyé à nos serveurs Cloud de manière sécurisée et chiffrée (TLS 1.3). Ces données sont traitées de manière éphémère et anonyme, et ne sont jamais associées à votre identité personnelle.
+                </li>
+                <li>
+                  <strong>Module de Signalement (Crowdsourcing) :</strong> Lorsque vous signalez volontairement un numéro, un lien ou une arnaque, ces informations sont stockées dans notre base de données sécurisée (Collection Reports) pour enrichir notre liste noire globale et entraîner nos algorithmes de détection.
+                </li>
               </ul>
             </section>
 
