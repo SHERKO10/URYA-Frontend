@@ -27,7 +27,6 @@ const Navbar = () => {
   const navLinks = [
     { name: 'À propos', href: '#about' },
     { name: 'Solutions', href: '#solutions' },
-    { name: 'Démo', href: '#demo' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -96,8 +95,19 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:flex items-center">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="#"
+              onClick={(e) => { e.preventDefault(); alert("Redirection vers le portail UryOffice (UryCollab) en cours de construction !"); }}
+              className={`group flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 border ${
+                isDarkHero
+                  ? 'border-white/20 text-white hover:bg-white/10'
+                  : 'border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300'
+              }`}
+            >
+              Accès UryOffice
+            </a>
             <button
               onClick={() => scrollTo('#contact')}
               className={`group flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
@@ -150,7 +160,14 @@ const Navbar = () => {
                   {link.name}
                 </button>
               ))}
-              <div className="pt-2 border-t border-slate-100">
+              <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
+                <a
+                  href="#"
+                  onClick={(e) => { e.preventDefault(); alert("Redirection vers le portail UryOffice (UryCollab) en cours de construction !"); }}
+                  className="block w-full px-4 py-3 bg-slate-100 text-slate-700 text-center font-semibold rounded-xl hover:bg-slate-200 transition-all"
+                >
+                  Accès UryOffice
+                </a>
                 <button
                   onClick={() => scrollTo('#contact')}
                   className="block w-full px-4 py-3 bg-primary-600 text-white text-center font-semibold rounded-xl hover:bg-primary-500 transition-all"

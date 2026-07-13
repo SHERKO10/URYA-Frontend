@@ -56,8 +56,8 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-6"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full text-primary-300 text-xs font-semibold tracking-wider uppercase">
-            Cybersécurité & Intelligence Artificielle
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white text-xs font-semibold tracking-wider uppercase shadow-lg">
+            URYA ÉDITION ENTREPRISE
           </span>
         </motion.div>
 
@@ -68,10 +68,10 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-white leading-[1.1] tracking-tight"
         >
-          Souveraineté Numérique.
+          Collaboration Souveraine.
           <br />
-          <span className="bg-gradient-to-r from-primary-300 via-primary-400 to-primary-300 bg-clip-text text-transparent">
-            Protection Intelligente.
+          <span className="bg-gradient-to-r from-amber-400 via-rose-400 to-amber-400 bg-clip-text text-transparent">
+            Infrastructure Intelligente.
           </span>
         </motion.h1>
 
@@ -80,10 +80,10 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-base sm:text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed font-light"
+          className="text-base sm:text-lg md:text-xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light"
         >
-          Cryptographie avancée et IA comportementale pour la protection
-          de vos actifs numériques. Vos données restent sous votre contrôle.
+          Découvrez <strong className="text-amber-400 font-semibold">UryOffice</strong>, la plateforme de visioconférence et messagerie 100% privée. 
+          Propulsez votre IT avec <strong className="text-rose-400 font-semibold">SUNSET</strong>, l'agent IA qui automatise et sécurise la gestion de votre infrastructure.
         </motion.p>
 
         {/* CTAs */}
@@ -95,16 +95,15 @@ const Hero = () => {
         >
           <button
             onClick={() => scrollTo('#solutions')}
-            className="group bg-white text-slate-900 px-8 py-4 rounded-xl font-semibold text-sm sm:text-base hover:bg-slate-100 transition-all duration-300 hover:scale-[1.03] shadow-xl flex items-center gap-2"
+            className="group bg-amber-500 text-slate-900 px-8 py-4 rounded-xl font-bold text-sm sm:text-base hover:bg-amber-400 transition-all duration-300 hover:scale-[1.03] shadow-[0_0_20px_rgba(245,158,11,0.3)] flex items-center justify-center"
           >
-            Découvrir nos solutions
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            Découvrir UryOffice
           </button>
           <button
-            onClick={() => scrollTo('#contact')}
-            className="group bg-white/10 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-xl font-semibold text-sm sm:text-base hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:scale-[1.03] flex items-center gap-2"
+            onClick={() => scrollTo('#solutions')}
+            className="group bg-rose-500 text-slate-900 px-8 py-4 rounded-xl font-bold text-sm sm:text-base hover:bg-rose-400 transition-all duration-300 hover:scale-[1.03] shadow-[0_0_20px_rgba(244,63,94,0.3)] flex items-center justify-center"
           >
-            Planifier un échange
+            Découvrir SUNSET
           </button>
         </motion.div>
 
