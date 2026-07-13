@@ -36,10 +36,10 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Configuration EmailJS à remplacer par tes identifiants
+      // Configuration EmailJS avec identifiants URYA
       await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID',
+        import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_pmq47os',
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_am0twuh',
         {
           from_name: formData.name,
           reply_to: formData.email,
@@ -48,7 +48,7 @@ const ContactForm = () => {
           message: formData.message,
           to_email: 'teamurya@gmail.com',
         },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'UgDNKSCBE3NCTPyeZ'
       );
 
       setSubmitted(true);
@@ -74,7 +74,7 @@ const ContactForm = () => {
             <span className="gradient-text">échange</span>.
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-            Vous souhaitez évaluer nos solutions pour votre organisation ?
+            Vous souhaitez évaluer nos produits pour votre organisation ?
             Remplissez le formulaire et notre équipe vous recontactera sous 24h
             pour organiser une démonstration personnalisée.
           </p>
@@ -229,7 +229,7 @@ const Landing = () => {
               <span className="gradient-text">confiance</span>.
             </h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
-              URYA conçoit des solutions de cybersécurité simples et redoutablement efficaces, combinant{' '}
+              URYA conçoit des produits de cybersécurité simples et redoutablement efficaces, combinant{' '}
               <strong className="text-slate-800">technologies de pointe</strong> et{' '}
               <strong className="text-slate-800">intelligence artificielle</strong>.
               Notre mission : garantir que vos données professionnelles restent sous votre contrôle,
@@ -346,14 +346,14 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto">
           <motion.div {...fadeInUp} className="text-center mb-16">
             <span className="inline-block px-4 py-1.5 bg-primary-50 text-primary-700 text-xs font-semibold rounded-full border border-primary-100 mb-4 tracking-wide uppercase">
-              Nos Solutions
+              Nos Produits
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-5">
               Une protection adaptée à {' '}
               <span className="gradient-text">chaque besoin</span>.
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-              Des solutions claires et efficaces pour chaque profil — du particulier
+              Des produits clairs et efficaces pour chaque profil — du particulier
               aux grandes institutions.
             </p>
           </motion.div>
@@ -508,13 +508,13 @@ const Landing = () => {
               </div>
               <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
                 La sécurité numérique en toute simplicité.
-                Protégez vos données et votre entreprise avec nos solutions de confiance.
+                Protégez vos données et votre entreprise avec nos produits de confiance.
               </p>
             </div>
 
-            {/* Solutions */}
+            {/* Produits */}
             <div>
-              <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Solutions</h4>
+              <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Produits</h4>
               <ul className="space-y-2.5">
                 {['Scamurai · Mobile', 'LORA · PME', 'MAHAFA · Entreprises', 'UryOffice · Collaboration', 'SUNSET · IT Sécurisé', 'Analyseur d\'URL · Outil Web'].map((item) => (
                   <li key={item}>
