@@ -274,7 +274,7 @@ const Landing = () => {
               Productivité & Infrastructure
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-5">
-              La puissance collaborative et l'IA, <br className="hidden md:block" />
+              La puissance collaborative et l'automatisation, <br className="hidden md:block" />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-rose-400">réunies pour votre entreprise.</span>
             </h2>
           </div>
@@ -321,9 +321,9 @@ const Landing = () => {
                 <Cpu className="w-8 h-8" />
               </div>
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">SUNSET</h3>
-              <p className="text-rose-400 font-semibold mb-6 uppercase tracking-wider text-sm">L'Assistant IT Intelligent</p>
+              <p className="text-rose-400 font-semibold mb-6 uppercase tracking-wider text-sm">L'Assistant IT Sécurisé</p>
               <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-8">
-                Un assistant virtuel qui aide vos équipes informatiques. Il gère automatiquement les tâches répétitives, répare les pannes courantes et maintient votre sécurité au plus haut niveau, toujours sous votre contrôle.
+                Un agent automatisé qui aide vos équipes informatiques. Il gère de manière sécurisée les tâches répétitives, répare les pannes courantes et maintient votre infrastructure au plus haut niveau, toujours sous votre contrôle.
               </p>
               <ul className="space-y-4 mb-8">
                 {['Gain de temps pour vos équipes', 'Résolution automatique des pannes', 'Validation humaine des actions', 'Maintenance simplifiée'].map((f) => (
@@ -516,7 +516,7 @@ const Landing = () => {
             <div>
               <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Solutions</h4>
               <ul className="space-y-2.5">
-                {['Scamurai · Mobile', 'LORA · PME', 'MAHAFA · Entreprises', 'UryOffice · Collaboration', 'SUNSET · Agent IA', 'Analyseur d\'URL · Outil Web'].map((item) => (
+                {['Scamurai · Mobile', 'LORA · PME', 'MAHAFA · Entreprises', 'UryOffice · Collaboration', 'SUNSET · IT Sécurisé', 'Analyseur d\'URL · Outil Web'].map((item) => (
                   <li key={item}>
                     <span className="text-sm text-slate-400 hover:text-white transition-colors cursor-default">
                       {item}

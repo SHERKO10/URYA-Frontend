@@ -71,7 +71,7 @@ const Hero = () => {
           Collaboration Souveraine.
           <br />
           <span className="bg-gradient-to-r from-amber-400 via-rose-400 to-amber-400 bg-clip-text text-transparent">
-            Infrastructure Intelligente.
+            Infrastructure Sécurisée.
           </span>
         </motion.h1>
 
@@ -83,7 +83,7 @@ const Hero = () => {
           className="text-base sm:text-lg md:text-xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light"
         >
           Découvrez <strong className="text-amber-400 font-semibold">UryOffice</strong>, la plateforme de visioconférence et messagerie 100% privée. 
-          Propulsez votre IT avec <strong className="text-rose-400 font-semibold">SUNSET</strong>, l'agent IA qui automatise et sécurise la gestion de votre infrastructure.
+          Propulsez votre IT avec <strong className="text-rose-400 font-semibold">SUNSET</strong>, l'agent automatisé qui gère et protège votre infrastructure informatique.
         </motion.p>
 
         {/* CTAs */}
